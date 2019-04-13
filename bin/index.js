@@ -4,7 +4,7 @@ const fs = require('fs')
 const http = require('http')
 const handler = require('serve-handler')
 
-const commands = require('../lib/parse-argv')(process.argv)
+const args = require('../lib/parse-argv')(process.argv)
 const sse = require('../lib/sse-handler')
 const spawn = require('../lib/spawn')
 
@@ -25,17 +25,17 @@ const options = {
 
 const _handler = (e, filename) => {
   if (filename.endsWith('.scss')) {
-    spawn(commands['--css'])
+    spawn(args['--css'])
     return // stop execution
   }
 
   if (filename.endsWith('.js')) {
-    spawn(commands['--js'])
+    spawn(args['--js'])
   }
 }
 
 server.listen(3000, () => {
-  const dirs = commands['--watch']
+  const dirs = args['--watch']
 
   for (let i = 0; i < dirs.length; i++) {
     fs.watch(dirs[i], options, _handler)
