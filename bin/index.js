@@ -23,7 +23,7 @@ const options = {
   recursive: true
 }
 
-const _handler = (e, filename) => {
+const listener = (e, filename) => {
   if (filename.endsWith('.scss')) {
     spawn(args['--css'])
     return // stop execution
@@ -38,7 +38,7 @@ server.listen(3000, () => {
   const dirs = args['--watch']
 
   for (let i = 0; i < dirs.length; i++) {
-    fs.watch(dirs[i], options, _handler)
+    fs.watch(dirs[i], options, listener)
   }
 
   console.log('\nRunning at http://localhost:3000\n')
