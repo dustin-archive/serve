@@ -1,7 +1,7 @@
 {
   "name": "serve",
   "version": "0.1.0",
-  "description": "",
+  "description": "A basic reload server.",
   "author": "Dustin Dowell <dustindowell2@gmail.com>",
   "license": "MIT",
   "main": "index.js",
