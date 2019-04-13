@@ -4,9 +4,9 @@ const fs = require('fs')
 const http = require('http')
 const handler = require('serve-handler')
 
-const commands = require('./app/parse-argv')(process.argv)
-const sse = require('./app/sse-handler')
-const spawn = require('./app/spawn')
+const commands = require('../lib/parse-argv')(process.argv)
+const sse = require('../lib/sse-handler')
+const spawn = require('../lib/spawn')
 
 const server = http.createServer((request, response) => {
   if (request.url === '/reload') {
@@ -35,8 +35,12 @@ const _handler = (e, filename) => {
 }
 
 server.listen(3000, () => {
+  // for (let i = 0; i < watch.length; i++) {
+  //   fs.watch(watch[i], options, _handler)
+  // }
+
   fs.watch('src', options, _handler)
   fs.watch('src/shared', options, _handler)
 
-  console.log('\nRunning at http://localhost:3000\n')
+  console.log('\n', 'Running at http://localhost:3000', '\n')
 })
