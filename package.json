@@ -1,0 +1,14 @@
+{
+  "name": "serve",
+  "version": "0.1.0",
+  "description": "A basic reload server.",
+  "author": "Dustin Dowell <dustindowell2@gmail.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "bin": {
+    "serve": "./bin/index.js"
+  },
+  "dependencies": {
+    "serve-handler": "^5.0.8"
+  }
+}
