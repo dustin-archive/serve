@@ -35,8 +35,10 @@ const _handler = (e, filename) => {
 }
 
 server.listen(3000, () => {
-  for (let i = 0; i < commands.watch.length; i++) {
-    fs.watch(commands.watch[i], options, _handler)
+  const dirs = commands['--watch']
+
+  for (let i = 0; i < dirs.length; i++) {
+    fs.watch(dirs[i], options, _handler)
   }
 
   console.log('\nRunning at http://localhost:3000\n')
