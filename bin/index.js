@@ -19,10 +19,6 @@ const server = http.createServer((request, response) => {
   })
 })
 
-const options = {
-  recursive: true
-}
-
 const listener = (e, filename) => {
   if (filename.endsWith('.scss')) {
     spawn(args['--css'])
@@ -38,7 +34,7 @@ server.listen(3000, () => {
   const dirs = args['--watch']
 
   for (let i = 0; i < dirs.length; i++) {
-    fs.watch(dirs[i], options, listener)
+    fs.watch(dirs[i], { recursive: true }, listener)
   }
 
   console.log('\nRunning at http://localhost:3000\n')
