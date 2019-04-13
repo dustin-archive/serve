@@ -20,13 +20,10 @@ const server = http.createServer((request, response) => {
 })
 
 const listener = (e, filename) => {
-  if (filename.endsWith('.scss')) {
-    spawn(args['--css'])
-    return // stop execution
-  }
-
-  if (filename.endsWith('.js')) {
-    spawn(args['--js'])
+  for (let key in args) {
+    if (key !== '--watch' && filename.endsWith('.' + key.slice(2))) {
+      spawn(args[key])
+    }
   }
 }
 
