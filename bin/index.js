@@ -35,12 +35,9 @@ const _handler = (e, filename) => {
 }
 
 server.listen(3000, () => {
-  // for (let i = 0; i < watch.length; i++) {
-  //   fs.watch(watch[i], options, _handler)
-  // }
+  for (let i = 0; i < commands.watch.length; i++) {
+    fs.watch(commands.watch[i], options, _handler)
+  }
 
-  fs.watch('src', options, _handler)
-  fs.watch('src/shared', options, _handler)
-
-  console.log('\n', 'Running at http://localhost:3000', '\n')
+  console.log('\nRunning at http://localhost:3000\n')
 })
