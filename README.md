@@ -1,7 +1,7 @@
 
 # serve
 
-> A basic reload server.
+> A simple zero dependency reload server.
 
 ## Install
 
@@ -9,6 +9,12 @@ This project is only hosted on Github. Fortunately, you can still install via np
 
 ```
 npm i whaaaley/serve
+```
+
+## Use
+
+```
+serve --scss "npm run scss" --js "npm run js" --watch "src"
 ```
 
 ## Command Line Flags
