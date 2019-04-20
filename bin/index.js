@@ -11,13 +11,13 @@ const serve = require('../lib/serve-handler')
 const port = args['--port'] || 3000
 const dirs = args['--watch']
 
-const server = http.createServer((request, response) => {
-  if (request.url === '/reload') {
-    reload.handler(response)
+const server = http.createServer((req, res) => {
+  if (req.url === '/reload') {
+    reload.handler(res)
     return // stop execution
   }
 
-  serve.handler(request, response)
+  serve.handler(req, res)
 })
 
 const listener = (e, filename) => {
