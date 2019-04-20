@@ -14,12 +14,13 @@ npm i whaaaley/serve
 ## Use
 
 ```
-serve --scss "npm run scss" --js "npm run js" --watch "src"
+serve --js "npm run js" --watch "src"
 ```
 
 ## Command Line Flags
 
 ```
 --<extension> "<command>"
+--port "<port>"
 --watch "<directory>"
 ```
