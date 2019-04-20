@@ -2,37 +2,36 @@
 
 const fs = require('fs')
 const http = require('http')
-const handler = require('serve-handler')
 
 const args = require('../lib/parse-argv')(process.argv)
-const sse = require('../lib/sse-handler')
-const spawn = require('../lib/spawn')
+const exec = require('../lib/exec')
+const reload = require('../lib/reload-handler')
+const serve = require('../lib/serve-handler')
+
+const port = args['--port'] || 3000
+const dirs = args['--watch']
 
 const server = http.createServer((request, response) => {
   if (request.url === '/reload') {
-    return sse.handler(request, response)
+    reload.handler(response)
+    return // stop execution
   }
 
-  return handler(request, response, {
-    public: 'public',
-    rewrites: [{ source: '**', destination: '/index.html' }]
-  })
+  serve.handler(request, response)
 })
 
 const listener = (e, filename) => {
   for (let key in args) {
     if (key !== '--watch' && filename.endsWith('.' + key.slice(2))) {
-      spawn(args[key])
+      exec(args[key])
     }
   }
 }
 
-server.listen(3000, () => {
-  const dirs = args['--watch']
-
+server.listen(port, () => {
   for (let i = 0; i < dirs.length; i++) {
     fs.watch(dirs[i], { recursive: true }, listener)
   }
 
-  console.log('\nRunning at http://localhost:3000\n')
+  console.log('\nRunning at http://localhost:' + port + '\n')
 })
