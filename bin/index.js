@@ -8,6 +8,9 @@ const exec = require('../lib/exec')
 const reload = require('../lib/reload-handler')
 const serve = require('../lib/serve-handler')
 
+const port = args['--port'] || 3000
+const dirs = args['--watch']
+
 const server = http.createServer((request, response) => {
   if (request.url === '/reload') {
     reload.handler(response)
@@ -25,12 +28,10 @@ const listener = (e, filename) => {
   }
 }
 
-server.listen(3000, () => {
-  const dirs = args['--watch']
-
+server.listen(port, () => {
   for (let i = 0; i < dirs.length; i++) {
     fs.watch(dirs[i], { recursive: true }, listener)
   }
 
-  console.log('\nRunning at http://localhost:3000\n')
+  console.log('\nRunning at http://localhost:' + port + '\n')
 })
