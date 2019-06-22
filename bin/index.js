@@ -9,8 +9,13 @@ const reload = require('../lib/reload-handler')
 const serve = require('../lib/serve-handler')
 
 const flags = ['--bang', '--port', '--watch']
+
+const bang = args['--bang']
 const dirs = args['--watch']
 const port = args['--port'] || 3000
+
+const name = 'whaaaley/serve version 0.3.0'
+const host = 'http://localhost:' + port
 
 const server = http.createServer((req, res) => {
   if (req.url === '/reload') {
@@ -21,24 +26,28 @@ const server = http.createServer((req, res) => {
   serve.handler(req, res)
 })
 
-const listener = (_, filename) => {
+const listener = (_eventType, filename) => {
   for (let key in args) {
     if (flags.includes(key) === true) {
       continue // next iteration
     }
 
-    if (filename.endsWith('.' + key.slice(2))) {
+    if (filename.endsWith('.' + key.slice(2)) === true) {
       exec(args[key])
     }
   }
 }
 
 server.listen(port, () => {
-  exec(args['--bang'])
-
-  for (let i = 0; i < dirs.length; i++) {
-    fs.watch(dirs[i], { recursive: true }, listener)
+  if (typeof bang === 'string') { // optional
+    exec(bang)
   }
 
-  console.log('\nRunning at http://localhost:' + port + '\n')
+  if (Array.isArray(dirs) === true) { // optional
+    for (let i = 0; i < dirs.length; i++) {
+      fs.watch(dirs[i], { recursive: true }, listener)
+    }
+  }
+
+  console.log(name + '\nRunning at ' + host + '\n')
 })
