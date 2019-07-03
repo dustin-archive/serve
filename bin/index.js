@@ -26,7 +26,7 @@ const server = http.createServer((req, res) => {
   serve.handler(req, res)
 })
 
-const listener = (_eventType, filename) => {
+const watchHandler = (_eventType, filename) => {
   for (let key in args) {
     if (flags.includes(key) === true) {
       continue // next iteration
@@ -38,14 +38,22 @@ const listener = (_eventType, filename) => {
   }
 }
 
+const watchDir = dir => {
+  fs.watch(dir, { recursive: true }, watchHandler)
+}
+
 server.listen(port, () => {
   if (typeof bang === 'string') { // optional
     exec(bang)
   }
 
+  if (typeof dirs === 'string') {
+    watchDir(dirs)
+  }
+
   if (Array.isArray(dirs) === true) { // optional
     for (let i = 0; i < dirs.length; i++) {
-      fs.watch(dirs[i], { recursive: true }, listener)
+      watchDir(dirs[i])
     }
   }
 
