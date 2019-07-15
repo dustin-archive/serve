@@ -21,6 +21,7 @@ serve --js "npm run js" --watch "src"
 
 ```
 --<extension> "<command>"
+--bang "<command>"
 --port "<port>"
 --watch "<directory>"
 ```
